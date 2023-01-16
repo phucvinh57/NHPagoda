@@ -17,8 +17,8 @@ function createWindow() {
     console.log(__dirname);
     mainWindow.loadFile(path.join(__dirname, "index.html"));
 }
-
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
+app.disableHardwareAcceleration()
 app.on("ready", createWindow);
