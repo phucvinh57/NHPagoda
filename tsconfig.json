@@ -1,26 +1,44 @@
 {
-  "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx"
-  },
-  "include": [
-    "src"
-  ]
+    "compilerOptions": {
+        "target": "ESNext",
+        "baseUrl": ".",
+        "sourceRoot": "src",
+        "lib": ["dom", "dom.iterable", "esnext"],
+        "outDir": "build",
+        "sourceMap": true,
+        "allowJs": true,
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "experimentalDecorators": true,
+        "strictNullChecks": true,
+        "importHelpers": true,
+        "newLine": "LF",
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noUncheckedIndexedAccess": true,
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "noFallthroughCasesInSwitch": true,
+        "module": "CommonJS",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": true,
+        "jsx": "react-jsx",
+        "declaration": false,
+        "emitDecoratorMetadata": true,
+        "suppressImplicitAnyIndexErrors": false,
+        "noImplicitAny": true,
+        "typeRoots": ["./node_modules/@types"],
+        "paths": {
+            "@components": ["./src/components"],
+            "@pages": ["./src/pages"]
+        }
+    },
+    "include": ["src", "public"],
+    "exclude": ["node_modules", "dist"],
+    "linterOptions": {
+        "exclude": []
+    }
 }

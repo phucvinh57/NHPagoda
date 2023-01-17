@@ -1,0 +1,5 @@
+{
+    "directory": ["./src/components"],
+    "exclude": [".test.ts"],
+    "delete": true
+}

@@ -11,7 +11,7 @@ function createWindow() {
     mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
-        webPreferences: { nodeIntegration: true, contextIsolation: false },
+        webPreferences: { nodeIntegration: true, contextIsolation: false }
     });
     // and load the index.html of the app.
     console.log(__dirname);
@@ -20,5 +20,5 @@ function createWindow() {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.disableHardwareAcceleration()
+app.disableHardwareAcceleration();
 app.on("ready", createWindow);
