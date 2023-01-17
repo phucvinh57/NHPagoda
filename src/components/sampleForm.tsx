@@ -3,36 +3,36 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import yup from "yup";
 
 interface IFormInputs {
-    firstName: string;
-    age: number;
+  firstName: string;
+  age: number;
 }
 
 const schema = yup
-    .object({
-        firstName: yup.string().required(),
-        age: yup.number().positive().integer().required()
-    })
-    .required();
+  .object({
+    firstName: yup.string().required(),
+    age: yup.number().positive().integer().required()
+  })
+  .required();
 
 export function SampleForm() {
-    const {
-        register,
-        handleSubmit,
-        formState: { errors }
-    } = useForm<IFormInputs>({
-        resolver: yupResolver(schema)
-    });
-    const onSubmit = (data: IFormInputs) => console.log(data);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<IFormInputs>({
+    resolver: yupResolver(schema)
+  });
+  const onSubmit = (data: IFormInputs) => console.log(data);
 
-    return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <input {...register("firstName")} />
-            <p>{errors.firstName?.message}</p>
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <input {...register("firstName")} />
+      <p>{errors.firstName?.message}</p>
 
-            <input {...register("age")} />
-            <p>{errors.age?.message}</p>
+      <input {...register("age")} />
+      <p>{errors.age?.message}</p>
 
-            <input type='submit' />
-        </form>
-    );
+      <input type='submit' />
+    </form>
+  );
 }
