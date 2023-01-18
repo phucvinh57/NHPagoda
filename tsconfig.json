@@ -33,6 +33,7 @@
     "typeRoots": ["./node_modules/@types"],
     "paths": {
       "@components": ["./src/components"],
+      "@constants": ["./src/constants"],
       "@pages": ["./src/pages"]
     }
   },
