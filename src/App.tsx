@@ -1,8 +1,7 @@
 import { ProSidebar, Menu, MenuItem, SidebarHeader, SidebarFooter, SidebarContent } from "react-pro-sidebar";
-import { Button } from "react-bootstrap";
 import { FaPrint, FaDatabase, FaBars, FaGithub } from "react-icons/fa";
 import { useState } from "react";
-import { SidebarWidth } from "./constants";
+import { MY_GITHUB_LINK, SidebarWidth } from "@constants";
 
 export default function App() {
   const [sidebarCollapse, setSidebarCollapse] = useState(true);
@@ -13,8 +12,9 @@ export default function App() {
         <SidebarHeader>
           <Menu iconShape='round'>
             <MenuItem
-              icon={<FaBars onClick={() => setSidebarCollapse(!sidebarCollapse)} />}
+              icon={<FaBars />}
               style={{ fontSize: "18px", fontWeight: "bold" }}
+              onClick={() => setSidebarCollapse(!sidebarCollapse)}
             >
               Chùa Hội Khánh
             </MenuItem>
@@ -29,12 +29,12 @@ export default function App() {
 
         <SidebarFooter>
           <Menu iconShape='circle'>
-            <MenuItem icon={<FaGithub />}>Liên hệ</MenuItem>
+            <MenuItem icon={<FaGithub onClick={() => window.open(MY_GITHUB_LINK)}/>}>Liên hệ</MenuItem>
           </Menu>
         </SidebarFooter>
       </ProSidebar>
       <div id='main' style={{ marginLeft: `${sidebarCollapse ? SidebarWidth.COLLAPSE : SidebarWidth.EXPAND}px` }}>
-        <Button>Toggle</Button>
+        asdasda
       </div>
     </div>
   );

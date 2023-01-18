@@ -32,13 +32,13 @@
     "noImplicitAny": true,
     "typeRoots": ["./node_modules/@types"],
     "paths": {
-      "@components": ["./src/components"],
-      "@constants": ["./src/constants"],
-      "@pages": ["./src/pages"]
+      "@components": ["src/components"],
+      "@constants": ["src/constants"],
+      "@pages": ["src/pages"]
     }
   },
-  "include": ["src", "public"],
-  "exclude": ["node_modules", "dist"],
+  "include": ["**/*.ts", "**/*.tsx", "**/*.js"],
+  "exclude": ["node_modules", "build"],
   "linterOptions": {
     "exclude": []
   }

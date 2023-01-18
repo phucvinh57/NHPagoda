@@ -19,6 +19,7 @@
     "@types/react-dom": "^16.3.0",
     "babel-runtime": "^5.3.3",
     "bootstrap": "^5.2.3",
+    "electron-squirrel-startup": "^1.0.0",
     "node-sass": "^8.0.0",
     "react": "^16.3.0",
     "react-bootstrap": "^2.7.0",
@@ -34,15 +35,18 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "electron:start": "electron .",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "dev": "yarn barrels && craco start",
+    "staging": "electron .",
+    "package": "electron-forge package",
+    "build": "yarn barrels && craco build",
+    "test": "craco test",
+    "eject": "craco eject",
     "barrels": "barrelsby --config .barrelsby.json",
     "lint": "eslint '**/*.{tsx,ts,js}'",
     "format": "prettier '**/*.{tsx,ts,js,json,md,yml,yaml}' --write",
-    "prepare": "is-ci || husky install"
+    "prepare": "is-ci || husky install",
+    "start": "electron-forge start",
+    "make": "electron-forge make"
   },
   "eslintConfig": {
     "extends": [
@@ -63,6 +67,12 @@
     ]
   },
   "devDependencies": {
+    "@craco/craco": "^7.0.0",
+    "@electron-forge/cli": "^6.0.4",
+    "@electron-forge/maker-deb": "^6.0.4",
+    "@electron-forge/maker-rpm": "^6.0.4",
+    "@electron-forge/maker-squirrel": "^6.0.4",
+    "@electron-forge/maker-zip": "^6.0.4",
     "barrelsby": "^2.5.1",
     "electron": "^22.0.2",
     "eslint": "^8.3.0",
@@ -70,6 +80,7 @@
     "husky": "^8.0.1",
     "is-ci": "^3.0.1",
     "lint-staged": "^13.1.0",
+    "postcss": "^8.1.0",
     "prettier": "^2.8.3"
   }
 }
