@@ -4,7 +4,10 @@ module.exports = {
     alias: {
       "@constants": path.resolve(__dirname, "src/constants"),
       "@pages": path.resolve(__dirname, "src/pages"),
-      "@components": path.resolve(__dirname, "src/components")
+      "@components": path.resolve(__dirname, "src/components"),
+      "@types": path.resolve(__dirname, "src/types"),
+      "@interfaces": path.resolve(__dirname, "src/interfaces"),
+      "@services": path.resolve(__dirname, "src/services")
     }
   }
 };

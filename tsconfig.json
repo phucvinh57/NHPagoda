@@ -32,6 +32,9 @@
     "noImplicitAny": true,
     "typeRoots": ["./node_modules/@types"],
     "paths": {
+      "@services": ["src/services"],
+      "@types": ["src/types"],
+      "@interfaces": ["src/interfaces"],
       "@components": ["src/components"],
       "@constants": ["src/constants"],
       "@pages": ["src/pages"]
