@@ -1,5 +1,3 @@
 export function PersonInfoPage() {
-    return <div>
-        Person info page
-    </div>
+  return <div>Person info page</div>;
 }

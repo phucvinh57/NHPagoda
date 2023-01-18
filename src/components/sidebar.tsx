@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import { MY_GITHUB_LINK } from "@constants";
 
 interface ISidebarProps {
-  collapse: boolean,
-  toggle: () => void
+  collapse: boolean;
+  toggle: () => void;
 }
 
 export function Sidebar(props: ISidebarProps) {

@@ -1,5 +1,3 @@
 export function PrinterPage() {
-    return <div>
-        PRINTER
-    </div>
+  return <div>PRINTER</div>;
 }
