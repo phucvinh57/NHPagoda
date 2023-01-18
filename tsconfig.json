@@ -37,7 +37,7 @@
       "@pages": ["src/pages"]
     }
   },
-  "include": ["**/*.ts", "**/*.tsx", "**/*.js"],
+  "include": ["src", "**/*.ts", "**/*.tsx", "**/*.js"],
   "exclude": ["node_modules", "build"],
   "linterOptions": {
     "exclude": []

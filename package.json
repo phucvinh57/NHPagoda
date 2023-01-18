@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "main": "build/electron.js",
+  "description": "Manage personal info",
+  "license": "ISC",
   "homepage": "./",
   "dependencies": {
     "@babel/core": "^7.0.0-0",
@@ -20,7 +22,6 @@
     "babel-runtime": "^5.3.3",
     "bootstrap": "^5.2.3",
     "electron-squirrel-startup": "^1.0.0",
-    "node-sass": "^8.0.0",
     "react": "^16.3.0",
     "react-bootstrap": "^2.7.0",
     "react-dom": "^16.3.0",
@@ -30,23 +31,22 @@
     "react-router": "^6.6.2",
     "react-router-dom": "^6.6.2",
     "react-scripts": "5.0.1",
-    "sass": "^1.57.1",
     "typescript": "^4.4.2",
     "yup": "^0.32.11"
   },
   "scripts": {
     "dev": "yarn barrels && craco start",
-    "staging": "electron .",
-    "package": "electron-forge package",
     "build": "yarn barrels && craco build",
     "test": "craco test",
     "eject": "craco eject",
+    "staging": "electron .",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "prod": "electron-forge start",
     "barrels": "barrelsby --config .barrelsby.json",
     "lint": "eslint '**/*.{tsx,ts,js}'",
     "format": "prettier '**/*.{tsx,ts,js,json,md,yml,yaml}' --write",
-    "prepare": "is-ci || husky install",
-    "start": "electron-forge start",
-    "make": "electron-forge make"
+    "prepare": "is-ci || husky install"
   },
   "eslintConfig": {
     "extends": [

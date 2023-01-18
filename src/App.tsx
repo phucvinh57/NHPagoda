@@ -1,40 +1,22 @@
-import { ProSidebar, Menu, MenuItem, SidebarHeader, SidebarFooter, SidebarContent } from "react-pro-sidebar";
-import { FaPrint, FaDatabase, FaBars, FaGithub } from "react-icons/fa";
+import { SidebarWidth } from "@constants";
+import { Route, Routes } from "react-router-dom";
 import { useState } from "react";
-import { MY_GITHUB_LINK, SidebarWidth } from "@constants";
+import { PersonInfoPage, PrinterPage } from "@pages";
+import { Sidebar } from "@components";
 
 export default function App() {
   const [sidebarCollapse, setSidebarCollapse] = useState(true);
 
   return (
     <div>
-      <ProSidebar style={{ position: "fixed", height: "100vh" }} collapsed={sidebarCollapse}>
-        <SidebarHeader>
-          <Menu iconShape='round'>
-            <MenuItem
-              icon={<FaBars />}
-              style={{ fontSize: "18px", fontWeight: "bold" }}
-              onClick={() => setSidebarCollapse(!sidebarCollapse)}
-            >
-              Chùa Hội Khánh
-            </MenuItem>
-          </Menu>
-        </SidebarHeader>
-        <SidebarContent>
-          <Menu iconShape='circle'>
-            <MenuItem icon={<FaDatabase />}>Danh sách phật tử</MenuItem>
-            <MenuItem icon={<FaPrint />}>In ấn</MenuItem>
-          </Menu>
-        </SidebarContent>
+      <Sidebar toggle={() => setSidebarCollapse(!sidebarCollapse)} collapse={sidebarCollapse} />
 
-        <SidebarFooter>
-          <Menu iconShape='circle'>
-            <MenuItem icon={<FaGithub onClick={() => window.open(MY_GITHUB_LINK)}/>}>Liên hệ</MenuItem>
-          </Menu>
-        </SidebarFooter>
-      </ProSidebar>
       <div id='main' style={{ marginLeft: `${sidebarCollapse ? SidebarWidth.COLLAPSE : SidebarWidth.EXPAND}px` }}>
-        asdasda
+        <Routes>
+          <Route path='/persons' element={<PersonInfoPage />} />
+          <Route path='/' element={<PersonInfoPage />} />
+          <Route path='/printer' element={<PrinterPage />} />
+        </Routes>
       </div>
     </div>
   );
