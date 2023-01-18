@@ -7,7 +7,8 @@ module.exports = {
       "@components": path.resolve(__dirname, "src/components"),
       "@types": path.resolve(__dirname, "src/types"),
       "@interfaces": path.resolve(__dirname, "src/interfaces"),
-      "@services": path.resolve(__dirname, "src/services")
+      "@services": path.resolve(__dirname, "src/services"),
+      "@utils": path.resolve(__dirname, "src/utils")
     }
   }
 };
