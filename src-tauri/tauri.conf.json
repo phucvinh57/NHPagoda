@@ -55,6 +55,7 @@
     "windows": [
       {
         "fullscreen": false,
+        "center": true,
         "height": 600,
         "resizable": true,
         "title": "NHPagoda",

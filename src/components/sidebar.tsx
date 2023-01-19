@@ -30,7 +30,7 @@ export function Sidebar(props: ISidebarProps) {
       </SidebarContent>
       <SidebarFooter>
         <Menu iconShape='circle'>
-          <MenuItem icon={<FaGithub />} onClick={() => window.open(MY_GITHUB_LINK)}>
+          <MenuItem icon={<FaGithub />} onClick={() => window.eval(`window.location.replace('${MY_GITHUB_LINK}')`)}>
             Liên hệ
           </MenuItem>
         </Menu>

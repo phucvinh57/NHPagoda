@@ -22,16 +22,17 @@ export function PersonInfoPage() {
 
   return (
     <div className='px-5 py-4'>
-      <Input
-        label='Tìm kiếm theo tên ...'
-        icon={<FaSearch />}
-        onChange={(e) => {
-          setQuery(e.target.value);
-          debounced();
-        }}
-        value={query}
-      />
-      ;
+      <div className='bg-white rounded'>
+        <Input
+          label='Tìm kiếm theo tên ...'
+          icon={<FaSearch />}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            debounced();
+          }}
+          value={query}
+        />
+      </div>
     </div>
   );
 }
