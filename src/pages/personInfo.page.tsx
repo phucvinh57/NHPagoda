@@ -1,21 +1,11 @@
 import { addressService } from "@services";
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
-import { Combobox } from "@headlessui/react";
-
-const people = ["Durward Reynolds", "Kenton Towne", "Therese Wunsch", "Benedict Kessler", "Katelyn Rohan"];
+import { Input } from "@material-tailwind/react";
+import { FaSearch } from "react-icons/fa";
 
 export function PersonInfoPage() {
-  const [selectedPerson, setSelectedPerson] = useState(people[0]);
   const [query, setQuery] = useState("");
-
-  const filteredPeople = useMemo(() => {
-    return query === ""
-      ? people
-      : people.filter((person) => {
-          return person.toLowerCase().includes(query.toLowerCase());
-        });
-  }, [query]);
 
   const debounced = useDebouncedCallback(
     // function
@@ -31,21 +21,17 @@ export function PersonInfoPage() {
   );
 
   return (
-    <Combobox
-      value={selectedPerson}
-      onChange={(value) => {
-        setSelectedPerson(value);
-        debounced();
-      }}
-    >
-      <Combobox.Input onChange={(event) => setQuery(event.target.value)} />
-      <Combobox.Options>
-        {filteredPeople.map((person) => (
-          <Combobox.Option key={person} value={person}>
-            {person}
-          </Combobox.Option>
-        ))}
-      </Combobox.Options>
-    </Combobox>
+    <div className='px-5 py-4'>
+      <Input
+        label='Tìm kiếm theo tên ...'
+        icon={<FaSearch />}
+        onChange={(e) => {
+          setQuery(e.target.value);
+          debounced();
+        }}
+        value={query}
+      />
+      ;
+    </div>
   );
 }

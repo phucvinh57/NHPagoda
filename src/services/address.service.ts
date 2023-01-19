@@ -31,7 +31,11 @@ class AddressService {
               limit: params.limit ? params.limit : -1
             }
           }
-        : undefined
+        : {
+            params: {
+              limit: -1
+            }
+          }
     );
     const rawResults: IGetProvincesRawResults[] = response.data.data.data;
     return rawResults.map((item) => ({

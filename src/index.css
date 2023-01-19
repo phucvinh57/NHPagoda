@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 body {
-    background-color: #f1f1f1;
+  background-color: #f1f1f1;
 }
 
 #main {
-    margin-left: 270px;
-    transition: 0.3s;
+  margin-left: 270px;
+  transition: 0.3s;
 }

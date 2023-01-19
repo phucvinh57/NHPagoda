@@ -2,6 +2,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "target": "ESNext",
+    "sourceRoot": "src",
+    "sourceMap": true,
     "useDefineForClassFields": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "allowJs": false,
@@ -26,6 +28,6 @@
       "@utils": ["src/utils"]
     }
   },
-  "include": ["src", "**/*.ts", "**/*.tsx", "**/*.js"],
+  "include": ["src", "**/*.ts", "**/*.tsx", "**/*.js", "*.cjs"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
