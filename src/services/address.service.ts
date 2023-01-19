@@ -21,13 +21,18 @@ class AddressService {
   }
 
   async getProvinces(params?: IGetProvincesQueryParams): Promise<IGetProvincesResults[]> {
-    const response = await this.http.get("/provinces/getAll", params ? {
-      params: {
-        q: params.query,
-        cols: [ProvinceDataCol.NAME_WITH_TYPE, ProvinceDataCol.CODE, ProvinceDataCol.TYPE].join(","),
-        limit: params.limit ? params.limit : -1
-      }
-    }: undefined);
+    const response = await this.http.get(
+      "/provinces/getAll",
+      params
+        ? {
+            params: {
+              q: params.query,
+              cols: [ProvinceDataCol.NAME_WITH_TYPE, ProvinceDataCol.CODE, ProvinceDataCol.TYPE].join(","),
+              limit: params.limit ? params.limit : -1
+            }
+          }
+        : undefined
+    );
     const rawResults: IGetProvincesRawResults[] = response.data.data.data;
     return rawResults.map((item) => ({
       id: item._id,
