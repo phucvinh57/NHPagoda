@@ -1,19 +1,17 @@
-import { addressService } from "@services";
 import { useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { Input } from "@material-tailwind/react";
 import { FaSearch } from "react-icons/fa";
+import { peopleService } from "@services";
 
 export function PersonInfoPage() {
   const [query, setQuery] = useState("");
+  const [content, setContent] = useState("");
 
   const debounced = useDebouncedCallback(
-    // function
     () => {
-      console.log("GET PROVINCES");
-      addressService.getProvinces().then((data) => {
-        console.log(data);
-      });
+      console.log("TEST TAURI COMMAND");
+      peopleService.findPersonByName("Vinh").then((result) => setContent(result));
     },
     // delay in ms
     800,
@@ -33,6 +31,7 @@ export function PersonInfoPage() {
           value={query}
         />
       </div>
+      <p>{content}</p>
     </div>
   );
 }

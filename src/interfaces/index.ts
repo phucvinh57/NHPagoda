@@ -3,4 +3,4 @@
  */
 
 export * from "./address";
-export * from "./database";
+export * from "./person";
