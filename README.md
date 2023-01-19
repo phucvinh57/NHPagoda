@@ -1,28 +1,7 @@
-# Documentation
+# Tauri + React + Typescript
 
-- Use `electron` and `react` to build a desktop application
+This template should help get you started developing with Tauri, React and Typescript in Vite.
 
-## Prerequisites
+## Recommended IDE Setup
 
-- `node` v18.13.0
-- `yarn` v1.22.19 | `npm` v8.19.3
-
-## How to run
-
-First, install dependencies:
-
-```bash
-yarn install
-```
-
-In development mode, just run app on browser:
-
-```bash
-yarn start
-```
-
-To run as an desktop application:
-
-```bash
-yarn build && yarn electron:start
-```
+- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)

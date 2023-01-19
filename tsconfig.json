@@ -1,49 +1,21 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "baseUrl": ".",
-    "sourceRoot": "src",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "outDir": "build",
-    "sourceMap": true,
-    "allowJs": true,
+    "useDefineForClassFields": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "allowJs": false,
     "skipLibCheck": true,
-    "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "strictNullChecks": true,
-    "importHelpers": true,
-    "newLine": "LF",
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noUncheckedIndexedAccess": true,
+    "esModuleInterop": false,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "CommonJS",
-    "moduleResolution": "node",
+    "module": "ESNext",
+    "moduleResolution": "Node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
-    "declaration": false,
-    "emitDecoratorMetadata": true,
-    "suppressImplicitAnyIndexErrors": false,
-    "noImplicitAny": true,
-    "typeRoots": ["./node_modules/@types"],
-    "paths": {
-      "@services": ["src/services"],
-      "@types": ["src/types"],
-      "@interfaces": ["src/interfaces"],
-      "@components": ["src/components"],
-      "@constants": ["src/constants"],
-      "@pages": ["src/pages"],
-      "@utils": ["src/utils"]
-    }
+    "jsx": "react-jsx"
   },
-  "include": ["src", "**/*.ts", "**/*.tsx", "**/*.js"],
-  "exclude": ["node_modules", "build"],
-  "linterOptions": {
-    "exclude": []
-  }
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }
