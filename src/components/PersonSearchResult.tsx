@@ -3,7 +3,7 @@ import { Typography } from "@material-tailwind/react";
 
 export function PersonSearchResult(props: IPersonSearchResultProps) {
   return (
-    <div className='bg-white hover:border-2 hover:cursor-pointer border-blue-400 rounded-lg py-2 px-4 mb-2'>
+    <div className='bg-white hover:border-2 hover:cursor-pointer border-blue-400 rounded-lg py-2 px-4 mb-2 border-spacing-0'>
       <div className='flex justify-between align-middle'>
         <Typography variant='h6'>{props.name}</Typography>
         <Typography>
