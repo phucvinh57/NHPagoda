@@ -10,6 +10,7 @@ export interface PersonModel {
 export interface PersonCreateInput {
   firstName: string;
   lastName: string;
+  searchName: string;
   religiousName?: string;
   birthdate: number;
 }

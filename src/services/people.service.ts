@@ -26,7 +26,7 @@ class PeopleService {
   // }
 
   async createFamily(data: FamilyCreateInput): Promise<number> {
-    return invoke(TauriCommand.CREATE_FAMILY, { family: data });
+    return invoke(TauriCommand.CREATE_FAMILY, { data });
   }
 }
 

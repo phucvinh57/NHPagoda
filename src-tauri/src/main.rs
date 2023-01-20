@@ -8,17 +8,21 @@ mod model;
 
 use crate::dto::FamilyCreateInput;
 use lazy_static::lazy_static;
-use sqlite::{open, Connection, Error, Value};
+use sqlite::{open, Connection, Error, State, Value};
 use std::sync::Mutex;
 
 lazy_static! {
-    static ref DB: Mutex<Connection> = Mutex::new(open(":memory:").unwrap());
+    static ref DB: Mutex<Connection> = Mutex::new(open("../database.db").unwrap());
 }
 
 fn init_db() {
     let db = DB.lock().unwrap();
     db.execute("PRAGMA case_sensitive_like = true").unwrap();
     db.execute("PRAGMA foreign_keys = ON").unwrap();
+    db.execute("PRAGMA synchronous=OFF").unwrap();
+    db.execute("PRAGMA count_changes=OFF").unwrap();
+    db.execute("PRAGMA journal_mode=MEMORY").unwrap();
+    db.execute("PRAGMA temp_store=MEMORY").unwrap();
     db.execute(
         "CREATE TABLE IF NOT EXISTS family (
         id INTEGER    PRIMARY KEY AUTOINCREMENT,
@@ -64,6 +68,8 @@ fn create_family(data: FamilyCreateInput) -> Result<i64, String> {
             ][..],
         )?;
 
+        while let Ok(State::Row) = create_family_statement.next() {}
+
         let get_family_id_query = "SELECT last_insert_rowid()";
 
         db.iterate(get_family_id_query, |pairs| {
@@ -97,6 +103,7 @@ fn create_family(data: FamilyCreateInput) -> Result<i64, String> {
                     (":fid", Value::Integer(family_id)),
                 ][..],
             )?;
+            while let Ok(State::Row) = create_person_statement.next() {}
         }
         db.execute("COMMIT")?;
         Ok(())
