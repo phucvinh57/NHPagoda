@@ -2,8 +2,8 @@ export interface PersonSearchItem {
   id: number;
   firstName: string;
   lastName: string;
-  religiousName: string;
-  address: number;
+  religiousName?: string;
+  address: string;
   familyId: number;
 }
 

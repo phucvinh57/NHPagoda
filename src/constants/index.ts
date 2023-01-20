@@ -6,3 +6,4 @@ export * from "./address";
 export * from "./links";
 export * from "./sidebar";
 export * from "./tauriCommands";
+export * from "./util";
