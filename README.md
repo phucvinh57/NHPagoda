@@ -53,3 +53,25 @@ yarn dev
 If your RAM capacity is less than or equal `8GB`, create a swapfile to avoid memory overflow. A swapfile should have a size equal RAM's size.
 
 Visit [How to create a swapfile](https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-20-04) for more detail.
+
+## Project structure
+
+```python
+📦public                        # Contains assets
+📦src                           # Source code for UI
+ ┣ 📂components                     # Reusable components
+ ┣ 📂constants                      # Constants goes here
+ ┣ 📂interfaces                     # Interfaces goes here
+ ┣ 📂pages                          # UI pages
+ ┣ 📂services                       # Services, include tauri command calls, 3rd party services and printer
+ ┣ 📂types                          # All types goes here
+ ┣ 📂utils                          # Utility functions
+ ┣ 📜App.tsx                        # App component
+ ┣ 📜index.css                      # All override css here
+ ┣ 📜index.tsx                      # App entry
+ ┗ 📜vite-env.d.ts                  # Vite env
+📦src-tauri                     # Source code for main logic
+ ┣ 📂icons                          # Icons
+ ┗ 📂src                            # Source
+# And another files ...
+```
