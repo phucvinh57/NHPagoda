@@ -8,12 +8,15 @@ mod model;
 
 use crate::dto::FamilyCreateInput;
 use lazy_static::lazy_static;
+use model::PersonModel;
 use sqlite::{open, Connection, Error, State, Value};
 use std::sync::Mutex;
 
 lazy_static! {
     static ref DB: Mutex<Connection> = Mutex::new(open("../database.db").unwrap());
 }
+
+static ERR_MESSAGE: &str = "Thao tác thất bại !";
 
 fn init_db() {
     let db = DB.lock().unwrap();
@@ -54,7 +57,7 @@ fn create_family(data: FamilyCreateInput) -> Result<i64, String> {
     let db = DB.lock().unwrap();
     let mut family_id: i64 = 0;
 
-    let do_steps = || -> Result<(), Error> {
+    let transaction = || -> Result<(), Error> {
         db.execute("BEGIN TRANSACTION").unwrap();
         let create_family_query = "INSERT INTO family (provinceCode, districtCode, wardCode, address) VALUES (:pc, :dc, :wc, :addr)";
         let mut create_family_statement = db.prepare(create_family_query)?;
@@ -109,17 +112,52 @@ fn create_family(data: FamilyCreateInput) -> Result<i64, String> {
         Ok(())
     };
 
-    if let Err(_err) = do_steps() {
+    if let Err(_err) = transaction() {
         db.execute("ROLLBACK TRANSACTION").unwrap();
-        return Err("Thao tác thất bại".into());
+        return Err(ERR_MESSAGE.into());
     }
     Ok(family_id)
 }
 
 #[tauri::command]
-fn find_person_by_name(search_name: String) -> Result<String, String> {
-    println!("{}", search_name);
-    Ok("Nguyễn Phúc Vinh".into())
+fn find_person_by_name(search_name: String) -> Result<Vec<PersonModel>, String> {
+    let db = DB.lock().unwrap();
+    let query = "
+        SELECT
+            person.id AS id,
+            person.firstName AS first_name,
+            person.lastName AS last_name,
+            family.address AS address,
+            family.id AS family_id
+        FROM person JOIN family ON person.familyId = family.id
+        WHERE person.searchName LIKE ?
+    ";
+
+    let transaction = || -> Result<Vec<PersonModel>, Error> {
+        let mut stmt = db.prepare(query)?;
+        stmt.bind((1, Value::String(format!("%{}%", search_name))))?;
+
+        let mut persons: Vec<PersonModel> = Vec::new();
+        while let Ok(State::Row) = stmt.next() {
+            let mut person = PersonModel::new();
+            person.set_id(stmt.read::<i64, _>("id").unwrap());
+            person.set_first_name(stmt.read::<String, _>("first_name").unwrap());
+            person.set_last_name(stmt.read::<String, _>("last_name").unwrap());
+            person.set_address(stmt.read::<String, _>("address").unwrap());
+            person.set_family_id(stmt.read::<i64, _>("family_id").unwrap());
+
+            persons.push(person);
+        }
+        Ok(persons)
+    };
+
+    match transaction() {
+        Ok(persons) => Ok(persons),
+        Err(err) => {
+            println!("{:?}", err);
+            Err(ERR_MESSAGE.into())
+        }
+    }
 }
 
 fn main() {

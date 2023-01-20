@@ -3,32 +3,23 @@ import { useDebouncedCallback } from "use-debounce";
 import { Input } from "@material-tailwind/react";
 import { FaSearch } from "react-icons/fa";
 import { peopleService } from "@services";
-import moment from "moment";
+import { PersonSearchItem } from "@interfaces";
+import { toast } from "react-toastify";
+// import moment from "moment";
 
 export function PersonInfoPage() {
   const [query, setQuery] = useState("");
-  const [content, setContent] = useState("");
+  const [searchPersonResults, setSearchPersonResults] = useState<PersonSearchItem[]>([]);
 
   const debounced = useDebouncedCallback(
     () => {
       console.log("TEST TAURI COMMAND");
       peopleService
-        .createFamily({
-          provinceCode: 62,
-          districtCode: 611,
-          wardCode: 23377,
-          address: "Thôn 7",
-          persons: [
-            {
-              firstName: "Vinh",
-              lastName: "Nguyễn Phúc",
-              birthdate: moment().unix(),
-              searchName: "vinhnguyenphuc"
-            }
-          ]
+        .findPersonByName(query)
+        .then((persons) => {
+          setSearchPersonResults(persons);
         })
-        .then((familyId) => setContent("Family ID:" + familyId))
-        .catch((err) => setContent(err));
+        .catch((err: string) => toast.error<string>(err));
     },
     // delay in ms
     1000,
@@ -48,7 +39,13 @@ export function PersonInfoPage() {
           value={query}
         />
       </div>
-      <p>{content}</p>
+      <p>{JSON.stringify(searchPersonResults)}</p>
+      {searchPersonResults.map((person) => (
+        <div>
+          <p>{person.firstName}</p>
+          <p>{person.address}</p>
+        </div>
+      ))}
     </div>
   );
 }

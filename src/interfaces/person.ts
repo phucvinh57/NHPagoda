@@ -1,10 +1,10 @@
-export interface PersonModel {
+export interface PersonSearchItem {
   id: number;
   firstName: string;
   lastName: string;
   religiousName: string;
-  birthdate: number;
-  searchName: string;
+  address: number;
+  familyId: number;
 }
 
 export interface PersonCreateInput {
@@ -39,5 +39,5 @@ export interface FamilyModel {
   districtCode: number;
   wardCode: number;
   address: string;
-  members?: PersonModel[];
+  members?: PersonSearchItem[];
 }
