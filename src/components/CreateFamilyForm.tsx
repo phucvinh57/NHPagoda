@@ -46,8 +46,9 @@ export function CreateFamilyForm() {
           <form onSubmit={handleSubmitForm}>
             <div className='mb-7 flex'>
               <Select
-                label='City'
-                variant='standard'
+                key='province'
+                label='Tỉnh/Thành phố'
+                variant='static'
                 onChange={(value) => {
                   if (value) {
                     const province = provinces.find((item) => item.id === value);
@@ -71,6 +72,7 @@ export function CreateFamilyForm() {
             </div>
             <div className='mb-7 flex'>
               <Select
+                key='district'
                 label='Quận/Huyện'
                 variant='standard'
                 onChange={(value) => {
@@ -90,6 +92,7 @@ export function CreateFamilyForm() {
             </div>
             <div className='mb-7 flex'>
               <Select
+                key='ward'
                 label='Thôn/Xã'
                 variant='standard'
                 onChange={(value) => {
@@ -113,7 +116,10 @@ export function CreateFamilyForm() {
                 required
                 variant='standard'
                 value={formInput.address}
-                onChange={(e) => setFormInput({ ...formInput, address: e.target.value })}
+                onChange={(e) => {
+                  setFormInput({ ...formInput, address: e.target.value });
+                  console.log(formInput);
+                }}
               />
             </div>
 
