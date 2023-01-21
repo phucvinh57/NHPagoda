@@ -22,6 +22,16 @@ export function CreateFamilyForm() {
     persons: []
   });
 
+  const [address, setAddress] = useState<{ province: string; district: string; ward: string }>({
+    province: "",
+    district: "",
+    ward: ""
+  });
+
+  useEffect(() => {
+    setFormInput({ ...formInput, address: [address.ward, address.district, address.province].join(", ") });
+  }, [address]);
+
   useEffect(() => {
     setProvinces(addressService.getProvinces());
   }, []);
@@ -42,9 +52,9 @@ export function CreateFamilyForm() {
       </Button>
 
       <Dialog open={open} handler={toggleOpen} className='divide-y-2 divide-black-600' size='xl'>
-        <DialogBody className='pt-7'>
+        <DialogBody className='pt-8'>
           <form onSubmit={handleSubmitForm}>
-            <div className='mb-7 flex'>
+            <div className='mb-7'>
               <Select
                 key='province'
                 label='Tỉnh/Thành phố'
@@ -58,6 +68,7 @@ export function CreateFamilyForm() {
                         provinceId: province.id
                       });
                       setDistricts(addressService.getDistricts(province.id));
+                      setAddress({ ...address, province: province.name });
                       setWards([]);
                     }
                   }
@@ -70,16 +81,17 @@ export function CreateFamilyForm() {
                 ))}
               </Select>
             </div>
-            <div className='mb-7 flex'>
+            <div className='mb-7'>
               <Select
                 key='district'
                 label='Quận/Huyện'
-                variant='standard'
+                variant='static'
                 onChange={(value) => {
                   const district = districts.find((item) => item.id === value);
                   if (district) {
                     setFormInput({ ...formInput, districtId: district.id });
                     setWards(addressService.getWards(formInput.provinceId, district.id));
+                    setAddress({ ...address, district: district.name });
                   }
                 }}
               >
@@ -90,15 +102,18 @@ export function CreateFamilyForm() {
                 ))}
               </Select>
             </div>
-            <div className='mb-7 flex'>
+            <div className='mb-7'>
               <Select
                 key='ward'
                 label='Thôn/Xã'
-                variant='standard'
+                variant='static'
                 onChange={(value) => {
                   if (value) {
                     const ward = wards.find((item) => item.id === value);
-                    if (ward) setFormInput({ ...formInput, wardId: ward.id });
+                    if (ward) {
+                      setFormInput({ ...formInput, wardId: ward.id });
+                      setAddress({ ...address, ward: ward.name });
+                    }
                   }
                 }}
               >
@@ -110,11 +125,11 @@ export function CreateFamilyForm() {
               </Select>
             </div>
 
-            <div>
+            <div className='mb-7'>
               <Input
                 label='Địa chỉ'
                 required
-                variant='standard'
+                variant='static'
                 value={formInput.address}
                 onChange={(e) => {
                   setFormInput({ ...formInput, address: e.target.value });
