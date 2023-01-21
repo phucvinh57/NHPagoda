@@ -45,15 +45,9 @@ export function CreateFamilyForm() {
         <DialogBody className='pt-7'>
           <form onSubmit={handleSubmitForm}>
             <div className='mb-7 flex'>
-              <Select>
-                <Option>CLMN</Option>
-                <Option>DCM WTF ?</Option>
-              </Select>
-            </div>
-            <div className='mb-7 flex'>
               <Select
-                label='Tỉnh/Thành phố'
-                variant='static'
+                label='City'
+                variant='standard'
                 onChange={(value) => {
                   if (value) {
                     const province = provinces.find((item) => item.id === value);
@@ -67,7 +61,6 @@ export function CreateFamilyForm() {
                     }
                   }
                 }}
-                value={formInput.provinceId}
               >
                 {provinces.map((province) => (
                   <Option value={province.id} key={province.id}>
@@ -79,7 +72,7 @@ export function CreateFamilyForm() {
             <div className='mb-7 flex'>
               <Select
                 label='Quận/Huyện'
-                variant='static'
+                variant='standard'
                 onChange={(value) => {
                   const district = districts.find((item) => item.id === value);
                   if (district) {
@@ -87,7 +80,6 @@ export function CreateFamilyForm() {
                     setWards(addressService.getWards(formInput.provinceId, district.id));
                   }
                 }}
-                value={formInput.districtId}
               >
                 {districts.map((district) => (
                   <Option value={district.id} key={district.id}>
@@ -99,14 +91,13 @@ export function CreateFamilyForm() {
             <div className='mb-7 flex'>
               <Select
                 label='Thôn/Xã'
-                variant='static'
+                variant='standard'
                 onChange={(value) => {
                   if (value) {
                     const ward = wards.find((item) => item.id === value);
                     if (ward) setFormInput({ ...formInput, wardId: ward.id });
                   }
                 }}
-                value={formInput.wardId}
               >
                 {wards.map((ward) => (
                   <Option value={ward.id} key={ward.id}>
@@ -120,7 +111,7 @@ export function CreateFamilyForm() {
               <Input
                 label='Địa chỉ'
                 required
-                variant='static'
+                variant='standard'
                 value={formInput.address}
                 onChange={(e) => setFormInput({ ...formInput, address: e.target.value })}
               />
