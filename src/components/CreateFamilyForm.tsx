@@ -14,6 +14,9 @@ export function CreateFamilyForm() {
   const [districts, setDistricts] = useState<IAddress[]>([]);
   const [wards, setWards] = useState<IAddress[]>([]);
 
+  const [provinceId, setProvinceId] = useState("");
+  const [districtId, setDistrictId] = useState("");
+
   const [formInput, setFormInput] = useState<IFamilyCreateInput>({
     provinceId: "",
     districtId: "",
@@ -25,6 +28,21 @@ export function CreateFamilyForm() {
   useEffect(() => {
     setProvinces(addressService.getProvinces());
   }, []);
+
+  useEffect(() => {
+    if (provinceId) {
+      console.log(provinceId);
+      setDistricts(addressService.getDistricts(provinceId));
+      setWards([]);
+    }
+  }, [provinceId]);
+
+  useEffect(() => {
+    if (districtId) {
+      console.log(districtId);
+      setWards(addressService.getWards(formInput.provinceId, districtId));
+    }
+  }, [districtId]);
 
   const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -52,6 +70,7 @@ export function CreateFamilyForm() {
             </div>
             <div className='mb-7 flex'>
               <Select
+                key='province'
                 label='Tỉnh/Thành phố'
                 variant='static'
                 onChange={(value) => {
@@ -62,12 +81,10 @@ export function CreateFamilyForm() {
                         ...formInput,
                         provinceId: province.id
                       });
-                      setDistricts(addressService.getDistricts(province.id));
-                      setWards([]);
+                      setProvinceId(province.id);
                     }
                   }
                 }}
-                value={formInput.provinceId}
               >
                 {provinces.map((province) => (
                   <Option value={province.id} key={province.id}>
@@ -78,16 +95,17 @@ export function CreateFamilyForm() {
             </div>
             <div className='mb-7 flex'>
               <Select
+                key='district'
                 label='Quận/Huyện'
                 variant='static'
                 onChange={(value) => {
                   const district = districts.find((item) => item.id === value);
                   if (district) {
                     setFormInput({ ...formInput, districtId: district.id });
-                    setWards(addressService.getWards(formInput.provinceId, district.id));
+                    setDistrictId(district.id);
+                    console.log(formInput);
                   }
                 }}
-                value={formInput.districtId}
               >
                 {districts.map((district) => (
                   <Option value={district.id} key={district.id}>
@@ -98,6 +116,7 @@ export function CreateFamilyForm() {
             </div>
             <div className='mb-7 flex'>
               <Select
+                key='ward'
                 label='Thôn/Xã'
                 variant='static'
                 onChange={(value) => {
@@ -106,7 +125,6 @@ export function CreateFamilyForm() {
                     if (ward) setFormInput({ ...formInput, wardId: ward.id });
                   }
                 }}
-                value={formInput.wardId}
               >
                 {wards.map((ward) => (
                   <Option value={ward.id} key={ward.id}>
@@ -122,7 +140,10 @@ export function CreateFamilyForm() {
                 required
                 variant='static'
                 value={formInput.address}
-                onChange={(e) => setFormInput({ ...formInput, address: e.target.value })}
+                onChange={(e) => {
+                  setFormInput({ ...formInput, address: e.target.value });
+                  console.log(formInput);
+                }}
               />
             </div>
 
