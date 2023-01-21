@@ -3,14 +3,14 @@ import { useDebouncedCallback } from "use-debounce";
 import { Input } from "@material-tailwind/react";
 import { FaSearch } from "react-icons/fa";
 import { peopleService } from "@services";
-import { PersonSearchItem } from "@interfaces";
+import { IPersonSearchItem } from "@interfaces";
 import { toast } from "react-toastify";
 import { CreateFamilyForm, PersonSearchResult } from "@components";
 import { MIN_QUERY_LENGTH } from "@constants";
 
 export function PersonInfoPage() {
   const [query, setQuery] = useState("");
-  const [searchPersonResults, setSearchPersonResults] = useState<PersonSearchItem[]>([]);
+  const [searchPersonResults, setSearchPersonResults] = useState<IPersonSearchItem[]>([]);
 
   const debounced = useDebouncedCallback(
     () => {

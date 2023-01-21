@@ -29,10 +29,10 @@ fn init_db() {
     db.execute(
         "CREATE TABLE IF NOT EXISTS family (
         id INTEGER    PRIMARY KEY AUTOINCREMENT,
-        provinceCode  INTEGER NOT NULL,
-        districtCode  INTEGER NOT NULL,
-        wardCode      INTEGER NOT NULL,
-        address       TEXT    NOT NULL
+        provinceId    TEXT NOT NULL,
+        districtId    TEXT NOT NULL,
+        wardId        TEXT NOT NULL,
+        address       TEXT NOT NULL
     )",
     )
     .unwrap();
@@ -59,14 +59,14 @@ fn create_family(data: FamilyCreateInput) -> Result<i64, String> {
 
     let transaction = || -> Result<(), Error> {
         db.execute("BEGIN TRANSACTION").unwrap();
-        let create_family_query = "INSERT INTO family (provinceCode, districtCode, wardCode, address) VALUES (:pc, :dc, :wc, :addr)";
+        let create_family_query = "INSERT INTO family (provinceId, districtId, wardId, address) VALUES (:pc, :dc, :wc, :addr)";
         let mut create_family_statement = db.prepare(create_family_query)?;
 
         create_family_statement.bind(
             &[
-                (":pc", Value::Integer(data.province_code)),
-                (":dc", Value::Integer(data.district_code)),
-                (":wc", Value::Integer(data.ward_code)),
+                (":pc", Value::String(data.province_id)),
+                (":dc", Value::String(data.district_id)),
+                (":wc", Value::String(data.ward_id)),
                 (":addr", Value::String(data.address)),
             ][..],
         )?;

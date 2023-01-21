@@ -1,85 +1,33 @@
-import { ProvinceDataCol } from "@constants";
-import {
-  IGetDistrictsQueryParams,
-  IGetDistrictsRawResults,
-  IGetDistrictsResults,
-  IGetProvincesQueryParams,
-  IGetProvincesRawResults,
-  IGetProvincesResults,
-  IGetWardsQueryParams,
-  IGetWardsRawResults,
-  IGetWardsResults
-} from "@interfaces";
-import axios, { Axios } from "axios";
+import { DISTRICT_NOT_EXISTS, PROVINCE_NOT_EXISTS } from "@constants";
+import { IAddress, IRawProvince } from "@interfaces";
+import axios from "axios";
 
 class AddressService {
-  private http: Axios;
-  constructor() {
-    this.http = axios.create({
-      baseURL: "https://vn-public-apis.fpo.vn"
-    });
+  private $provinces: IRawProvince[] | null = null;
+
+  private async $init(): Promise<IRawProvince[]> {
+    const response = await axios.get("https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json");
+    return response.data;
   }
 
-  async getProvinces(params?: IGetProvincesQueryParams): Promise<IGetProvincesResults[]> {
-    const response = await this.http.get(
-      "/provinces/getAll",
-      params
-        ? {
-            params: {
-              q: params.query,
-              cols: [ProvinceDataCol.NAME_WITH_TYPE, ProvinceDataCol.CODE, ProvinceDataCol.TYPE].join(","),
-              limit: params.limit ? params.limit : -1
-            }
-          }
-        : {
-            params: {
-              limit: -1
-            }
-          }
-    );
-    const rawResults: IGetProvincesRawResults[] = response.data.data.data;
-    return rawResults.map((item) => ({
-      id: item._id,
-      name: item.name_with_type,
-      code: item.code,
-      type: item.type
-    }));
+  async getProvinces(): Promise<IAddress[]> {
+    if (!this.$provinces) this.$provinces = await this.$init();
+    return this.$provinces.map((province) => ({ id: province.Id, name: province.Name }));
   }
 
-  async getDistrictsByProvince(params: IGetDistrictsQueryParams): Promise<IGetDistrictsResults[]> {
-    const response = await this.http.get("/districts/getByProvince", {
-      params: {
-        q: params.query,
-        cols: [ProvinceDataCol.NAME_WITH_TYPE, ProvinceDataCol.CODE, ProvinceDataCol.TYPE].join(","),
-        limit: params.limit ? params.limit : -1
-      }
-    });
-    const rawResults: IGetDistrictsRawResults[] = response.data.data.data;
-    return rawResults.map((item) => ({
-      id: item._id,
-      name: item.name_with_type,
-      code: item.code,
-      type: item.type,
-      path: item.path_with_type
-    }));
+  async getDistricts(provinceName: string): Promise<IAddress[]> {
+    if (!this.$provinces) this.$provinces = await this.$init();
+    const province = this.$provinces.find((item) => item.Name === provinceName);
+    if (!province) throw new Error(PROVINCE_NOT_EXISTS);
+    return province.Districts.map((district) => ({ id: district.Id, name: district.Name }));
   }
-
-  async getWardsByDistrict(params: IGetWardsQueryParams): Promise<IGetWardsResults[]> {
-    const response = await this.http.get("/districts/getByProvince", {
-      params: {
-        q: params.query,
-        cols: [ProvinceDataCol.NAME_WITH_TYPE, ProvinceDataCol.CODE, ProvinceDataCol.TYPE].join(","),
-        limit: params.limit ? params.limit : -1
-      }
-    });
-    const rawResults: IGetWardsRawResults[] = response.data.data.data;
-    return rawResults.map((item) => ({
-      id: item._id,
-      name: item.name_with_type,
-      code: item.code,
-      type: item.type,
-      path: item.path_with_type
-    }));
+  async getWards(provinceName: string, districtName: string): Promise<IAddress[]> {
+    if (!this.$provinces) this.$provinces = await this.$init();
+    const province = this.$provinces.find((item) => item.Name === provinceName);
+    if (!province) throw new Error(PROVINCE_NOT_EXISTS);
+    const district = province.Districts.find((item) => item.Name === districtName);
+    if (!district) throw new Error(DISTRICT_NOT_EXISTS);
+    return district.Wards.map((ward) => ({ id: ward.Id, name: ward.Name }));
   }
 }
 

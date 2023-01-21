@@ -3,6 +3,7 @@
  */
 
 export * from "./address";
+export * from "./errorCode";
 export * from "./links";
 export * from "./sidebar";
 export * from "./tauriCommands";

@@ -16,14 +16,14 @@ pub struct PersonCreateInput {
 
 #[derive(serde::Deserialize)]
 pub struct FamilyCreateInput {
-    #[serde(alias = "provinceCode")]
-    pub province_code: i64,
+    #[serde(alias = "provinceId")]
+    pub province_id: String,
 
-    #[serde(alias = "districtCode")]
-    pub district_code: i64,
+    #[serde(alias = "districtId")]
+    pub district_id: String,
 
-    #[serde(alias = "wardCode")]
-    pub ward_code: i64,
+    #[serde(alias = "wardId")]
+    pub ward_id: String,
     pub address: String,
     pub persons: Vec<PersonCreateInput>,
 }
