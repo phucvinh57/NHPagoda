@@ -1,8 +1,7 @@
-import { CREATE_FAMILY_INVALID_INPUT, CREATE_FAMILY_SUCCESS, TOO_MANY_REQUEST } from "@constants";
+import { CREATE_FAMILY_INVALID_INPUT, CREATE_FAMILY_SUCCESS } from "@constants";
 import { familyCreateInput, IAddress, IFamilyCreateInput } from "@interfaces";
 import { Button, Dialog, DialogBody, Input, Option, Select } from "@material-tailwind/react";
 import { addressService } from "@services";
-import { AxiosError } from "axios";
 import React, { Fragment, useEffect, useState } from "react";
 import { FaUserPlus } from "react-icons/fa";
 import { toast } from "react-toastify";
@@ -23,36 +22,9 @@ export function CreateFamilyForm() {
     persons: []
   });
 
-  const handleError = (err: AxiosError) => {
-    if (err.response?.status === TOO_MANY_REQUEST) {
-      return;
-    }
-    console.error(err);
-  };
-
   useEffect(() => {
-    addressService
-      .getProvinces()
-      .then((data) => setProvinces(data))
-      .catch(handleError);
+    setProvinces(addressService.getProvinces());
   }, []);
-
-  useEffect(() => {
-    if (formInput.provinceId.length !== 0) {
-      addressService
-        .getDistricts(formInput.provinceId)
-        .then((data) => setDistricts(data))
-        .catch(handleError);
-    }
-  }, [formInput.provinceId]);
-
-  useEffect(() => {
-    if (formInput.districtId.length !== 0)
-      addressService
-        .getWards(formInput.provinceId, formInput.districtId)
-        .then((data) => setWards(data))
-        .catch(handleError);
-  }, [formInput.districtId]);
 
   const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -85,11 +57,14 @@ export function CreateFamilyForm() {
                 onChange={(value) => {
                   if (value) {
                     const province = provinces.find((item) => item.id === value);
-                    if (province)
+                    if (province) {
                       setFormInput({
                         ...formInput,
                         provinceId: province.id
                       });
+                      setDistricts(addressService.getDistricts(province.id));
+                      setWards([]);
+                    }
                   }
                 }}
                 value={formInput.provinceId}
@@ -106,9 +81,10 @@ export function CreateFamilyForm() {
                 label='Quận/Huyện'
                 variant='static'
                 onChange={(value) => {
-                  if (value) {
-                    const district = districts.find((item) => item.id === value);
-                    if (district) setFormInput({ ...formInput, districtId: district.id });
+                  const district = districts.find((item) => item.id === value);
+                  if (district) {
+                    setFormInput({ ...formInput, districtId: district.id });
+                    setWards(addressService.getWards(formInput.provinceId, district.id));
                   }
                 }}
                 value={formInput.districtId}
@@ -139,6 +115,7 @@ export function CreateFamilyForm() {
                 ))}
               </Select>
             </div>
+
             <div>
               <Input
                 label='Địa chỉ'

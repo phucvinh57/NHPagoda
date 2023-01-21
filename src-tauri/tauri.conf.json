@@ -11,7 +11,13 @@
   },
   "tauri": {
     "allowlist": {
-      "all": true
+      "all": true,
+      "fs": {
+        "all": true,
+        "readFile": true,
+        "readDir": true,
+        "exists": true
+      }
     },
     "bundle": {
       "active": true,
@@ -28,7 +34,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "nhpagoda",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
